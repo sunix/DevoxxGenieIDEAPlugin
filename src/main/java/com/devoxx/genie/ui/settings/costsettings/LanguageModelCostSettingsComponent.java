@@ -3,7 +3,7 @@ package com.devoxx.genie.ui.settings.costsettings;
 import com.devoxx.genie.model.LanguageModel;
 import com.devoxx.genie.model.enumarations.ModelProvider;
 import com.devoxx.genie.service.DevoxxGenieSettingsService;
-import com.devoxx.genie.service.DevoxxGenieSettingsServiceProvider;
+import com.devoxx.genie.service.DevoxxGenieServiceProvider;
 import com.devoxx.genie.service.LLMModelRegistryService;
 import com.devoxx.genie.ui.listener.LLMSettingsChangeListener;
 import com.devoxx.genie.ui.settings.AbstractSettingsComponent;
@@ -221,7 +221,7 @@ public class LanguageModelCostSettingsComponent extends AbstractSettingsComponen
     }
 
     public void apply() {
-        DevoxxGenieSettingsService settings = DevoxxGenieSettingsServiceProvider.getInstance();
+        DevoxxGenieSettingsService settings = DevoxxGenieSettingsService.getInstance();
         settings.setDefaultWindowContext((Integer) windowContextSpinner.getValue());
 
         for (int i = 0; i < tableModel.getRowCount(); i++) {

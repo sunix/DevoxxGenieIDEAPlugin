@@ -1,7 +1,7 @@
 package com.devoxx.genie.ui.renderer;
 
 import com.devoxx.genie.model.LanguageModel;
-import com.devoxx.genie.ui.util.WindowContextFormatterUtil;
+import com.devoxx.genie.util.WindowContextFormatterUtil;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.util.ui.JBUI;

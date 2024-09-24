@@ -35,13 +35,13 @@ public class PSIAnalyzerService {
         }
 
         for (PsiClass psiClass : runReadAction(javaFile::getClasses)) {
-            if (DevoxxGenieSettingsServiceProvider.getInstance().getAstParentClass()) {
+            if (DevoxxGenieSettingsService.getInstance().getAstParentClass()) {
                 extractBaseClass(psiClass, relatedClasses);
             }
-            if (DevoxxGenieSettingsServiceProvider.getInstance().getAstClassReference()) {
+            if (DevoxxGenieSettingsService.getInstance().getAstClassReference()) {
                 extractReferenceClasses(psiClass, relatedClasses);
             }
-            if (DevoxxGenieSettingsServiceProvider.getInstance().getAstFieldReference()) {
+            if (DevoxxGenieSettingsService.getInstance().getAstFieldReference()) {
                 PsiField[] fields = runReadAction(psiClass::getFields);
                 extractPSIFields(fields, relatedClasses);
             }

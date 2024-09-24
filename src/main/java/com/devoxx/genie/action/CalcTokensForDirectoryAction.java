@@ -1,12 +1,10 @@
 package com.devoxx.genie.action;
 
 import com.devoxx.genie.model.enumarations.ModelProvider;
-import com.devoxx.genie.service.DevoxxGenieSettingsService;
-import com.devoxx.genie.service.DevoxxGenieSettingsServiceProvider;
 import com.devoxx.genie.service.ProjectContentService;
 import com.devoxx.genie.ui.settings.DevoxxGenieStateService;
 import com.devoxx.genie.ui.util.NotificationUtil;
-import com.devoxx.genie.ui.util.WindowContextFormatterUtil;
+import com.devoxx.genie.util.WindowContextFormatterUtil;
 import com.intellij.openapi.actionSystem.ActionUpdateThread;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;

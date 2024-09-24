@@ -1,7 +1,7 @@
 package com.devoxx.genie.ui.panel;
 
 import com.devoxx.genie.model.request.ChatMessageContext;
-import com.devoxx.genie.service.ChatMemoryService;
+import com.devoxx.genie.service.IntellijChatMemoryService;
 import com.devoxx.genie.ui.component.JEditorPaneUtils;
 import com.devoxx.genie.ui.component.JHoverButton;
 import com.devoxx.genie.ui.component.StyleSheetsFactory;
@@ -84,7 +84,7 @@ public class UserPromptPanel extends BackgroundPanel {
         container.repaint();
 
         // Remove the chat from memory
-        ChatMemoryService.getInstance().remove(chatMessageContext);
+        IntellijChatMemoryService.getInstance().remove(chatMessageContext);
     }
 }
 

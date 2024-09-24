@@ -3,6 +3,9 @@ build/**
 .gradle
 .idea
 *.iml
+*.class
+/cli/build/**
+/cli/.gradle
 /core/build/**
 /core/.gradle
 /output-examples/**

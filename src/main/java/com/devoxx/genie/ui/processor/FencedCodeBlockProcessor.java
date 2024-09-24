@@ -1,5 +1,6 @@
 package com.devoxx.genie.ui.processor;
 
+import com.devoxx.genie.IntellijProjectHandler;
 import com.devoxx.genie.model.request.ChatMessageContext;
 import com.devoxx.genie.ui.component.StyleSheetsFactory;
 import com.devoxx.genie.ui.util.CodeSnippetAction;
@@ -32,7 +33,7 @@ public class FencedCodeBlockProcessor implements NodeProcessor {
      */
     @Override
     public JPanel processNode() {
-        HtmlRenderer htmlRenderer = createHtmlRenderer(chatMessageContext.getProject());
+        HtmlRenderer htmlRenderer = createHtmlRenderer(IntellijProjectHandler.intellijProjectFrom(chatMessageContext.getProject()));
         String htmlOutput = htmlRenderer.render(fencedCodeBlock);
         JEditorPane editorPane = createEditorPane(htmlOutput, StyleSheetsFactory.createCodeStyleSheet());
         editorPane.setBorder(BorderFactory.createLineBorder(CODE_BORDER_BG_COLOR, 1));

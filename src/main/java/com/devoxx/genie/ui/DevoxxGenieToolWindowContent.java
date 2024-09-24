@@ -5,8 +5,8 @@ import com.devoxx.genie.chatmodel.ChatModelFactoryProvider;
 import com.devoxx.genie.model.Constant;
 import com.devoxx.genie.model.LanguageModel;
 import com.devoxx.genie.model.enumarations.ModelProvider;
-import com.devoxx.genie.service.ChatMemoryService;
-import com.devoxx.genie.service.DevoxxGenieSettingsServiceProvider;
+import com.devoxx.genie.service.IntellijChatMemoryService;
+import com.devoxx.genie.service.DevoxxGenieServiceProvider;
 import com.devoxx.genie.service.FileListManager;
 import com.devoxx.genie.service.LLMProviderService;
 import com.devoxx.genie.ui.component.PromptInputArea;
@@ -322,7 +322,7 @@ public class DevoxxGenieToolWindowContent implements SettingsChangeListener,
     @Override
     public void startNewConversation() {
         FileListManager.getInstance().clear();
-        ChatMemoryService.getInstance().clear();
+        IntellijChatMemoryService.getInstance().clear();
 
         SwingUtilities.invokeLater(() -> {
             conversationPanel.updateNewConversationLabel();

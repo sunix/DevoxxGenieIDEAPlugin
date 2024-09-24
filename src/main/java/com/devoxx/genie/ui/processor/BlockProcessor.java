@@ -1,5 +1,6 @@
 package com.devoxx.genie.ui.processor;
 
+import com.devoxx.genie.IntellijProjectHandler;
 import com.devoxx.genie.model.request.ChatMessageContext;
 import com.devoxx.genie.ui.component.StyleSheetsFactory;
 import org.commonmark.node.Block;
@@ -24,7 +25,7 @@ public class BlockProcessor implements NodeProcessor {
      */
     @Override
     public JPanel processNode() {
-        HtmlRenderer htmlRenderer = createHtmlRenderer(chatMessageContext.getProject());
+        HtmlRenderer htmlRenderer = createHtmlRenderer(IntellijProjectHandler.intellijProjectFrom(chatMessageContext.getProject()));
         String htmlOutput = htmlRenderer.render(block);
 
         JEditorPane editorPane = createEditorPane(htmlOutput, StyleSheetsFactory.createParagraphStyleSheet());

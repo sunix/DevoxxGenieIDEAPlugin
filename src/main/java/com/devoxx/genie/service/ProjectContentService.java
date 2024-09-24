@@ -4,7 +4,7 @@ import com.devoxx.genie.model.ContentResult;
 import com.devoxx.genie.model.LanguageModel;
 import com.devoxx.genie.model.enumarations.ModelProvider;
 import com.devoxx.genie.ui.util.NotificationUtil;
-import com.devoxx.genie.ui.util.WindowContextFormatterUtil;
+import com.devoxx.genie.util.WindowContextFormatterUtil;
 import com.devoxx.genie.util.DefaultLLMSettingsUtil;
 import com.google.common.util.concurrent.AtomicDouble;
 import com.intellij.openapi.application.ApplicationManager;
@@ -117,7 +117,7 @@ public class ProjectContentService {
             return;
         }
 
-        DevoxxGenieSettingsService settings = DevoxxGenieSettingsServiceProvider.getInstance();
+        DevoxxGenieSettingsService settings = DevoxxGenieSettingsService.getInstance();
         AtomicDouble inputCost = new AtomicDouble(settings.getModelInputCost(provider, languageModel.getModelName()));
 
         getProjectContent(project, windowContext, true)
@@ -164,7 +164,7 @@ public class ProjectContentService {
                                              AtomicLong totalTokens,
                                              boolean isTokenCalculation,
                                              Encoding encoding) {
-        DevoxxGenieSettingsService settings = DevoxxGenieSettingsServiceProvider.getInstance();
+        DevoxxGenieSettingsService settings = DevoxxGenieSettingsService.getInstance();
 
         for (VirtualFile child : directory.getChildren()) {
             if (child.isDirectory()) {

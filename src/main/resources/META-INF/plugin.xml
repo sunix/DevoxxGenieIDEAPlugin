@@ -313,15 +313,15 @@
 
         <applicationService serviceImplementation="com.devoxx.genie.ui.settings.DevoxxGenieStateService"/>
         <applicationService serviceImplementation="com.devoxx.genie.service.PromptExecutionService"/>
-        <applicationService serviceImplementation="com.devoxx.genie.service.ChatMemoryService"/>
-        <applicationService serviceImplementation="com.devoxx.genie.service.MessageCreationService"/>
+        <applicationService serviceImplementation="com.devoxx.genie.service.IntellijChatMemoryService"/>
+        <applicationService serviceImplementation="com.devoxx.genie.service.IntellijMessageCreationService"/>
         <applicationService serviceImplementation="com.devoxx.genie.service.OllamaService"/>
         <applicationService serviceImplementation="com.devoxx.genie.service.PSIAnalyzerService"/>
         <applicationService serviceImplementation="com.devoxx.genie.service.WebSearchService"/>
-        <applicationService serviceImplementation="com.devoxx.genie.service.LLMProviderService"/>
         <applicationService serviceImplementation="com.devoxx.genie.service.PropertiesService"/>
         <applicationService serviceImplementation="com.devoxx.genie.service.ProjectScannerService"/>
         <applicationService serviceImplementation="com.devoxx.genie.service.ProjectContentService"/>
+        <applicationService serviceImplementation="com.devoxx.genie.service.IntelliJNotificationService"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">

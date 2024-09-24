@@ -5,18 +5,17 @@ import com.devoxx.genie.ui.panel.PromptOutputPanel;
 import dev.langchain4j.model.chat.StreamingChatLanguageModel;
 import dev.langchain4j.data.message.SystemMessage;
 import dev.langchain4j.data.message.UserMessage;
-import com.devoxx.genie.ui.util.NotificationUtil;
 import org.jetbrains.annotations.NotNull;
 
 public class StreamingPromptExecutor {
 
-    private final ChatMemoryService chatMemoryService;
-    private final MessageCreationService messageCreationService;
+    private final IntellijChatMemoryService chatMemoryService;
+    private final IntellijMessageCreationService messageCreationService;
     private StreamingResponseHandler currentStreamingHandler;
 
     public StreamingPromptExecutor() {
-        this.chatMemoryService = ChatMemoryService.getInstance();
-        this.messageCreationService = MessageCreationService.getInstance();
+        this.chatMemoryService = IntellijChatMemoryService.getInstance();
+        this.messageCreationService = IntellijMessageCreationService.getInstance();
     }
 
     /**
@@ -30,7 +29,7 @@ public class StreamingPromptExecutor {
                         Runnable enableButtons) {
         StreamingChatLanguageModel streamingChatLanguageModel = chatMessageContext.getStreamingChatLanguageModel();
         if (streamingChatLanguageModel == null) {
-            NotificationUtil.sendNotification(chatMessageContext.getProject(),
+            NotificationService.getInstance().sendNotification(chatMessageContext.getProject(),
                 "Streaming model not available, please select another provider or turn off streaming mode.");
             enableButtons.run();
             return;
@@ -49,7 +48,7 @@ public class StreamingPromptExecutor {
      */
     private void prepareMemory(ChatMessageContext chatMessageContext) {
         if (chatMemoryService.isEmpty()) {
-            chatMemoryService.add(new SystemMessage(DevoxxGenieSettingsServiceProvider.getInstance().getSystemPrompt()));
+            chatMemoryService.add(new SystemMessage(DevoxxGenieSettingsService.getInstance().getSystemPrompt()));
         }
 
         UserMessage userMessage = messageCreationService.createUserMessage(chatMessageContext);

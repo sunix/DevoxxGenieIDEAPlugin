@@ -1,5 +1,6 @@
 package com.devoxx.genie.service;
 
+import com.devoxx.genie.IntellijProjectHandler;
 import com.devoxx.genie.chatmodel.AbstractLightPlatformTestCase;
 import com.devoxx.genie.model.LanguageModel;
 import com.devoxx.genie.model.enumarations.ModelProvider;
@@ -154,7 +155,7 @@ public class PromptExecutionServiceIT extends AbstractLightPlatformTestCase {
             .userPrompt("What is the capital of Belgium?")
             .chatLanguageModel(chatModel)
             .languageModel(languageModel)
-            .project(getProject())
+            .project(IntellijProjectHandler.projectHandlerFrom(getProject()))
             .totalFileCount(1)
             .build();
 

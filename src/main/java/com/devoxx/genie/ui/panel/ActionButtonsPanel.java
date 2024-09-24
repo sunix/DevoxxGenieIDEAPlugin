@@ -7,7 +7,6 @@ import com.devoxx.genie.model.enumarations.ModelProvider;
 import com.devoxx.genie.model.request.ChatMessageContext;
 import com.devoxx.genie.service.ChatPromptExecutor;
 import com.devoxx.genie.service.DevoxxGenieSettingsService;
-import com.devoxx.genie.service.DevoxxGenieSettingsServiceProvider;
 import com.devoxx.genie.service.FileListManager;
 import com.devoxx.genie.service.ProjectContentService;
 import com.devoxx.genie.ui.DevoxxGenieToolWindowContent;
@@ -17,11 +16,9 @@ import com.devoxx.genie.ui.component.JHoverButton;
 import com.devoxx.genie.ui.component.PromptInputArea;
 import com.devoxx.genie.ui.component.TokenUsageBar;
 import com.devoxx.genie.ui.listener.SettingsChangeListener;
-import com.devoxx.genie.ui.settings.DevoxxGenieStateService;
-import com.devoxx.genie.ui.settings.DevoxxGenieStateServiceProvider;
 import com.devoxx.genie.ui.topic.AppTopics;
 import com.devoxx.genie.ui.util.NotificationUtil;
-import com.devoxx.genie.ui.util.WindowContextFormatterUtil;
+import com.devoxx.genie.util.WindowContextFormatterUtil;
 import com.devoxx.genie.util.ChatMessageContextUtil;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
@@ -38,7 +35,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
-import static com.devoxx.genie.chatmodel.ChatModelFactory.TEST_MODEL;
 import static com.devoxx.genie.model.Constant.*;
 import static com.devoxx.genie.ui.util.DevoxxGenieIconsUtil.*;
 import static javax.swing.SwingUtilities.invokeLater;
@@ -289,7 +285,7 @@ public class ActionButtonsPanel extends JPanel implements SettingsChangeListener
             return false;
         }
 
-        DevoxxGenieSettingsService stateService = DevoxxGenieSettingsServiceProvider.getInstance();
+        DevoxxGenieSettingsService stateService = DevoxxGenieSettingsService.getInstance();
         LanguageModel selectedLanguageModel = (LanguageModel) modelNameComboBox.getSelectedItem();
 
         // If selectedLanguageModel is null, create a default one
@@ -375,13 +371,13 @@ public class ActionButtonsPanel extends JPanel implements SettingsChangeListener
      * Set the search buttons visibility based on settings.
      */
     public void configureSearchButtonsVisibility() {
-        if (DevoxxGenieSettingsServiceProvider.getInstance().getHideSearchButtonsFlag()) {
+        if (DevoxxGenieSettingsService.getInstance().getHideSearchButtonsFlag()) {
             tavilySearchBtn.setVisible(false);
             googleSearchBtn.setVisible(false);
         } else {
-            tavilySearchBtn.setVisible(!DevoxxGenieSettingsServiceProvider.getInstance().getTavilySearchKey().isEmpty());
-            googleSearchBtn.setVisible(!DevoxxGenieSettingsServiceProvider.getInstance().getGoogleSearchKey().isEmpty() &&
-                !DevoxxGenieSettingsServiceProvider.getInstance().getGoogleCSIKey().isEmpty());
+            tavilySearchBtn.setVisible(!DevoxxGenieSettingsService.getInstance().getTavilySearchKey().isEmpty());
+            googleSearchBtn.setVisible(!DevoxxGenieSettingsService.getInstance().getGoogleSearchKey().isEmpty() &&
+                !DevoxxGenieSettingsService.getInstance().getGoogleCSIKey().isEmpty());
         }
     }
 

@@ -1,7 +1,7 @@
 package com.devoxx.genie.ui.settings.copyproject;
 
 import com.devoxx.genie.service.DevoxxGenieSettingsService;
-import com.devoxx.genie.service.DevoxxGenieSettingsServiceProvider;
+import com.devoxx.genie.service.DevoxxGenieServiceProvider;
 import com.devoxx.genie.ui.settings.AbstractSettingsComponent;
 import com.intellij.ui.AddEditRemovePanel;
 import com.intellij.ui.components.JBLabel;
@@ -23,7 +23,7 @@ public class CopyProjectSettingsComponent extends AbstractSettingsComponent {
     private final JCheckBox excludeJavadocCheckBox;
 
     public CopyProjectSettingsComponent() {
-        DevoxxGenieSettingsService settings = DevoxxGenieSettingsServiceProvider.getInstance();
+        DevoxxGenieSettingsService settings = DevoxxGenieSettingsService.getInstance();
         excludedDirectoriesPanel = new ExcludedDirectoriesPanel(settings.getExcludedDirectories());
         includedFileExtensionsPanel = new IncludedFileExtensionsPanel(settings.getIncludedFileExtensions());
         excludeJavadocCheckBox = new JCheckBox("Exclude Javadoc", settings.getExcludeJavaDoc());

@@ -12,7 +12,7 @@ public class PostStartupActivity implements ProjectActivity {
     @Nullable
     @Override
     public Object execute(@NotNull Project project, @NotNull Continuation<? super Unit> continuation) {
-        ChatMemoryService.getInstance().init();
+        IntellijChatMemoryService.getInstance().init();
         return continuation;
     }
 }

@@ -1,5 +1,6 @@
 package com.devoxx.genie.ui.component;
 
+import com.devoxx.genie.IntellijProjectHandler;
 import com.devoxx.genie.model.request.ChatMessageContext;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.components.JBPanel;
@@ -47,7 +48,7 @@ public class ExpandablePanel extends JBPanel<ExpandablePanel> {
         isExpanded = files.size() <= 3;
 
         for (VirtualFile file : files) {
-            contentPanel.add(new FileEntryComponent(chatMessageContext.getProject(), file, null));
+            contentPanel.add(new FileEntryComponent(IntellijProjectHandler.intellijProjectFrom(chatMessageContext.getProject()), file, null));
         }
         contentPanel.setVisible(true);
 

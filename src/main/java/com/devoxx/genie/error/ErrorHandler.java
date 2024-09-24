@@ -1,8 +1,12 @@
 package com.devoxx.genie.error;
 
+import com.devoxx.genie.ProjectHandler;
+import com.devoxx.genie.service.ProjectManager;
 import com.devoxx.genie.ui.util.NotificationUtil;
+import com.github.weisj.jsvg.h;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CancellationException;
@@ -19,6 +23,9 @@ public class ErrorHandler {
         UNKNOWN
     }
 
+    public static void handleError(ProjectHandler project, Throwable error) {
+        handleError(project.getAdaptedInstance(Project.class), error);
+    }
     public static void handleError(Project project, Throwable error) {
         ErrorType errorType = categorizeError(error);
         String message = getErrorMessage(errorType, error);

@@ -1,5 +1,6 @@
 package com.devoxx.genie.ui.panel;
 
+import com.devoxx.genie.IntellijProjectHandler;
 import com.devoxx.genie.model.request.ChatMessageContext;
 import com.devoxx.genie.service.FileListManager;
 import com.devoxx.genie.ui.component.ExpandablePanel;
@@ -54,7 +55,7 @@ public class ChatStreamingResponsePanel extends BackgroundPanel {
             .nodeRendererFactory(context -> {
                 AtomicReference<CodeBlockNodeRenderer> codeBlockRenderer = new AtomicReference<>();
                 ApplicationManager.getApplication().runReadAction(() -> {
-                    codeBlockRenderer.getAndSet(new CodeBlockNodeRenderer(chatMessageContext.getProject(), context));
+                    codeBlockRenderer.getAndSet(new CodeBlockNodeRenderer(IntellijProjectHandler.intellijProjectFrom(chatMessageContext.getProject()), context));
                 });
                 return codeBlockRenderer.get();
             })

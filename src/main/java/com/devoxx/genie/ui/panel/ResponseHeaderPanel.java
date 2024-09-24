@@ -1,5 +1,6 @@
 package com.devoxx.genie.ui.panel;
 
+import com.devoxx.genie.IntellijProjectHandler;
 import com.devoxx.genie.model.LanguageModel;
 import com.devoxx.genie.model.request.ChatMessageContext;
 import com.devoxx.genie.ui.component.JHoverButton;
@@ -77,7 +78,7 @@ public class ResponseHeaderPanel extends JBPanel<ResponseHeaderPanel> {
         Transferable transferable = new StringSelection(response);
         Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferable, null);
         NotificationUtil.sendNotification(
-            chatMessageContext.getProject(),
+            IntellijProjectHandler.intellijProjectFrom(chatMessageContext.getProject()),
             "The prompt response has been copied to the clipboard"
         );
     }

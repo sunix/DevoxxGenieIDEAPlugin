@@ -8,6 +8,11 @@ import com.devoxx.genie.model.enumarations.ModelProvider;
 
 public interface DevoxxGenieSettingsService {
 
+    static DevoxxGenieSettingsService getInstance() {
+        return DevoxxGenieServiceProvider.getServiceProvider()
+                .getDevoxxGenieSettingsService();
+    }
+
     List<CustomPrompt> getCustomPrompts();
 
     List<LanguageModel> getLanguageModels();

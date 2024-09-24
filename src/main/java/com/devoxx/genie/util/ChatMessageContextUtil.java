@@ -1,5 +1,8 @@
 package com.devoxx.genie.util;
 
+import com.devoxx.genie.FileAdapter;
+import com.devoxx.genie.IntellijProjectHandler;
+import com.devoxx.genie.IntellijVirtualFileAdapter;
 import com.devoxx.genie.chatmodel.ChatModelProvider;
 import com.devoxx.genie.error.ErrorHandler;
 import com.devoxx.genie.model.Constant;
@@ -8,7 +11,7 @@ import com.devoxx.genie.model.request.ChatMessageContext;
 import com.devoxx.genie.model.request.EditorInfo;
 import com.devoxx.genie.service.DevoxxGenieSettingsService;
 import com.devoxx.genie.service.FileListManager;
-import com.devoxx.genie.service.MessageCreationService;
+import com.devoxx.genie.service.IntellijMessageCreationService;
 import com.devoxx.genie.ui.EditorFileButtonManager;
 import com.devoxx.genie.ui.util.EditorUtil;
 import com.intellij.openapi.editor.Editor;
@@ -18,6 +21,7 @@ import dev.langchain4j.data.message.UserMessage;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChatMessageContextUtil {
 
@@ -36,7 +40,7 @@ public class ChatMessageContextUtil {
                                                             int totalFileCount) {
 
         ChatMessageContext context = ChatMessageContext.builder()
-            .project(project)
+            .project(new IntellijProjectHandler(project))
             .name(String.valueOf(System.currentTimeMillis()))
             .userPrompt(userPromptText)
             .userMessage(UserMessage.userMessage(userPromptText))
@@ -94,9 +98,10 @@ public class ChatMessageContextUtil {
     private static void addSelectedFiles(@NotNull ChatMessageContext chatMessageContext,
                                          String userPrompt,
                                          List<VirtualFile> files) {
-        chatMessageContext.setEditorInfo(new EditorInfo(files));
+        List<FileAdapter> fileHandlers = files.stream().map((VirtualFile file) -> new IntellijVirtualFileAdapter(file)).collect(Collectors.toList());
+        chatMessageContext.setEditorInfo(new EditorInfo(fileHandlers));
 
-        MessageCreationService.getInstance().createUserPromptWithContextAsync(chatMessageContext.getProject(), userPrompt, files)
+        IntellijMessageCreationService.getInstance().createUserPromptWithContextAsync(chatMessageContext.getProject(), userPrompt, fileHandlers)
             .thenAccept(chatMessageContext::setContext)
             .exceptionally(ex -> {
                 ErrorHandler.handleError(chatMessageContext.getProject(), ex);
@@ -106,7 +111,7 @@ public class ChatMessageContextUtil {
 
     private static void addEditorInfoToMessageContext(Editor editor,
                                                       @NotNull ChatMessageContext chatMessageContext) {
-        EditorInfo editorInfo = EditorUtil.getEditorInfo(chatMessageContext.getProject(), editor);
+        EditorInfo editorInfo = EditorUtil.getEditorInfo(chatMessageContext.getProject().getAdaptedInstance(Project.class), editor);
         chatMessageContext.setEditorInfo(editorInfo);
     }
 }

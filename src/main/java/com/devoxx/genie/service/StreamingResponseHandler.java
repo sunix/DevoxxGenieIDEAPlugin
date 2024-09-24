@@ -47,7 +47,7 @@ public class StreamingResponseHandler implements dev.langchain4j.model.Streaming
 
     private void finalizeResponse(@NotNull Response<AiMessage> response) {
         chatMessageContext.setAiMessage(response.content());
-        ChatMemoryService.getInstance().add(response.content());
+        IntellijChatMemoryService.getInstance().add(response.content());
         enableButtons.run();
     }
 

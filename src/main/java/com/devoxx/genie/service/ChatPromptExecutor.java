@@ -1,5 +1,8 @@
 package com.devoxx.genie.service;
 
+import com.devoxx.genie.IntellijProjectHandler;
+import com.devoxx.genie.IntellijVirtualFileAdapter;
+import com.devoxx.genie.ProjectHandler;
 import com.devoxx.genie.model.CustomPrompt;
 import com.devoxx.genie.model.request.ChatMessageContext;
 import com.devoxx.genie.model.request.EditorInfo;
@@ -13,6 +16,8 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
 import org.jetbrains.annotations.NotNull;
+
+import static com.devoxx.genie.ui.util.DevoxxGenieIconsUtil.AddFileIcon;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -39,7 +44,9 @@ public class ChatPromptExecutor {
                               Runnable enableButtons) {
 
         isRunning = true;
-        new Task.Backgroundable(chatMessageContext.getProject(), "Working...", true) {
+        ProjectHandler ph = chatMessageContext.getProject();
+        Project project = IntellijProjectHandler.intellijProjectFrom(ph);
+        new Task.Backgroundable(project, "Working...", true) {
             @Override
             public void run(@NotNull ProgressIndicator progressIndicator) {
                 if (chatMessageContext.isWebSearchRequested()) {
@@ -47,7 +54,7 @@ public class ChatPromptExecutor {
                         isRunning = false;
                         enableButtons.run();
                     });
-                } else if (DevoxxGenieSettingsServiceProvider.getInstance().getStreamMode()) {
+                } else if (DevoxxGenieSettingsService.getInstance().getStreamMode()) {
                     streamingPromptExecutor.execute(chatMessageContext, promptOutputPanel, () -> {
                         isRunning = false;
                         enableButtons.run();
@@ -74,7 +81,7 @@ public class ChatPromptExecutor {
 
         // Ensure that EditorInfo is set in the ChatMessageContext
         if (chatMessageContext.getEditorInfo() == null) {
-            chatMessageContext.setEditorInfo(getEditorInfo(chatMessageContext.getProject()));
+            chatMessageContext.setEditorInfo(getEditorInfo(IntellijProjectHandler.intellijProjectFrom(chatMessageContext.getProject())));
         }
 
         return commandFromPrompt;
@@ -92,7 +99,7 @@ public class ChatPromptExecutor {
             } else {
                 VirtualFile[] openFiles = fileEditorManager.getOpenFiles();
                 if (openFiles.length > 0) {
-                    editorInfo.setSelectedFiles(Arrays.asList(openFiles));
+                    editorInfo.setSelectedFiles(IntellijVirtualFileAdapter.fileHandlerListFrom(Arrays.asList(openFiles)));
                 }
             }
 
@@ -126,7 +133,7 @@ public class ChatPromptExecutor {
     private Optional<String> getCommandFromPrompt(@NotNull String prompt,
                                                   PromptOutputPanel promptOutputPanel) {
         if (prompt.startsWith("/")) {
-            DevoxxGenieSettingsService settings = DevoxxGenieSettingsServiceProvider.getInstance();
+            DevoxxGenieSettingsService settings = DevoxxGenieSettingsService.getInstance();
 
             // Check for custom prompts
             for (CustomPrompt customPrompt : settings.getCustomPrompts()) {

@@ -1,5 +1,6 @@
 package com.devoxx.genie.ui.util;
 
+import com.devoxx.genie.IntellijVirtualFileAdapter;
 import com.devoxx.genie.model.request.EditorInfo;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Document;
@@ -42,7 +43,7 @@ public class EditorUtil {
                 if (selectedText != null) {
                     editorInfo.setSelectedText(selectedText);
                 } else {
-                    editorInfo.setSelectedFiles(List.of(virtualFile));
+                    editorInfo.setSelectedFiles(List.of(new IntellijVirtualFileAdapter(virtualFile)));
                 }
 
                 // Get the file type of the file which represents the programming language (if any) of the file.

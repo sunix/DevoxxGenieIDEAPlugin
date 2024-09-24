@@ -1,5 +1,6 @@
 package com.devoxx.genie.ui.util;
 
+import com.devoxx.genie.IntellijProjectHandler;
 import com.devoxx.genie.model.request.ChatMessageContext;
 import com.devoxx.genie.ui.component.JHoverButton;
 import com.intellij.openapi.command.WriteCommandAction;
@@ -14,7 +15,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Clipboard;
-import java.awt.Toolkit;
 
 import static com.devoxx.genie.ui.util.DevoxxGenieIconsUtil.CopyIcon;
 import static com.devoxx.genie.ui.util.DevoxxGenieIconsUtil.InsertCodeIcon;
@@ -47,16 +47,16 @@ public class CodeSnippetAction {
     private void copyToClipboard(String codeSnippet) {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         clipboard.setContents(new StringSelection(codeSnippet), null);
-        NotificationUtil.sendNotification(chatMessageContext.getProject(), "Code copied to clipboard");
+        NotificationUtil.sendNotification(IntellijProjectHandler.intellijProjectFrom(chatMessageContext.getProject()), "Code copied to clipboard");
     }
 
     private void insertCode(String codeSnippet) {
-        FileEditorManager fileEditorManager = FileEditorManager.getInstance(chatMessageContext.getProject());
+        FileEditorManager fileEditorManager = FileEditorManager.getInstance(IntellijProjectHandler.intellijProjectFrom(chatMessageContext.getProject()));
         Editor editor = fileEditorManager.getSelectedTextEditor();
         if (editor != null) {
             Document document = editor.getDocument();
             CaretModel caretModel = editor.getCaretModel();
-            WriteCommandAction.runWriteCommandAction(chatMessageContext.getProject(), () -> {
+            WriteCommandAction.runWriteCommandAction(IntellijProjectHandler.intellijProjectFrom(chatMessageContext.getProject()), () -> {
                 try {
                     document.insertString(caretModel.getOffset(), codeSnippet);
                 } catch (Exception e) {
